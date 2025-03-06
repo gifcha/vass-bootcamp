@@ -15,8 +15,8 @@ export class TaskCreateComponent {
   titleValue = "";
   descriptionValue = "";
   typeValue = "";
-  createdOnValue = new Date("2000 January 1");
   statusValue = "";
+  createdOn = Date();
 
   createTask() {
     // {{Title}} {{...}} {{...}}
