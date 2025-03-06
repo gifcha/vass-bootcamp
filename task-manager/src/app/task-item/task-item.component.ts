@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-task-item',
-  imports: [],
+  imports: [MatListModule],
   templateUrl: './task-item.component.html',
   styleUrl: './task-item.component.scss'
 })

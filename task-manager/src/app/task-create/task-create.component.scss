@@ -1,28 +1,13 @@
 
-#task-create-div {
-  justify-content: center;
-  margin: 20vh;
-  margin-top: 10vh;
-}
 
 #create-task-btn {
+  margin-left: 1vw;
   width: 10vw;
-  height: 8vh;
+  height: 6vh;
   border-radius: 5px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 .input {
   width: 10vw;
   height: 8vh;
-
-}
-
-.flex > .align-button-with-input {
-  padding-bottom: 1.34375em;
-}
-
-.align-button-with-input > .mat-mdc-button-base {
-  height: max(36px, 100%);
 }
