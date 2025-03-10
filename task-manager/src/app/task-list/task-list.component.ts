@@ -1,19 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
-import { TaskComponent } from '../task-item/task-item.component';
 import { TaskCreateComponent } from '../task-create/task-create.component';
-import { TaskService } from '../task.service';
+import { TaskService, Task} from '../task.service';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
   selector: 'app-task-list',
-  imports: [MatListModule, TaskComponent, TaskCreateComponent],
+  imports: [MatListModule, TaskCreateComponent, MatCardModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
 })
 
 
 export class TaskListComponent {
-  taskList : TaskComponent[] = [];
+  taskList : Task[] = [];
   taskService = inject(TaskService);
 
   constructor() {

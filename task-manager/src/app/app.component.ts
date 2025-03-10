@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TaskCreateComponent } from './task-create/task-create.component';
 import { TaskListComponent } from './task-list/task-list.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TaskCreateComponent, TaskListComponent],
+  imports: [RouterOutlet, TaskListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

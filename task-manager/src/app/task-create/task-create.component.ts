@@ -3,8 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button';
-import { TaskComponent } from '../task-item/task-item.component';
-import { TaskService } from '../task.service';
+import { TaskService, Task} from '../task.service';
 
 @Component({
   selector: 'app-task-create',
@@ -19,14 +18,15 @@ import { TaskService } from '../task.service';
 })
 
 export class TaskCreateComponent {
-  titleValue = "";
-  descriptionValue = "Val";
-  typeValue = "";
-  statusValue = "";
+  titleInput = "";
+  descriptionInput = "";
+  typeInput = "";
+  statusInput = "";
 
   taskService = inject(TaskService);
 
   createTask() {
-    this.taskService.addTask(this.descriptionValue);
+    let task = new Task(this.titleInput, this.typeInput, this.descriptionInput, this.statusInput);
+    this.taskService.addTask(task);
   }
 }

@@ -1,8 +1,15 @@
 <div id="list-div">
-  <app-task-create #taskCreator></app-task-create>
-  <mat-list>
-    @for(task of taskList; track task.description){
-      <app-task-item></app-task-item>
+  <app-task-create></app-task-create>
+  <div id="task-div">
+    @for(task of taskList; track task){
+      <mat-card appearance="outlined">
+        <mat-card-content>{{task.title}}</mat-card-content>
+        <mat-card-content>{{task.description}}</mat-card-content>
+        <mat-card-content>{{task.type}}</mat-card-content>
+        <mat-card-content>{{task.status}}</mat-card-content>
+        <mat-card-content>{{task.createdOn}}</mat-card-content>
+        <button (click)="this.taskService.removeTask(task.id)" mat-flat-button id="delete-task-btn">Delete</button>
+      </mat-card>
     }
-  </mat-list>
+  </div>
 <div>
