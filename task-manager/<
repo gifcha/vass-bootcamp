@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, input, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button';
+import { TaskListComponent } from '../task-list/task-list.component';
 import { TaskComponent } from '../task-item/task-item.component';
-import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-task-create',
@@ -17,16 +17,18 @@ import { TaskService } from '../task.service';
   templateUrl: './task-create.component.html',
   styleUrl: './task-create.component.scss'
 })
-
 export class TaskCreateComponent {
   titleValue = "";
-  descriptionValue = "Val";
+  descriptionValue = "";
   typeValue = "";
   statusValue = "";
+  createdOn = Date();
 
-  taskService = inject(TaskService);
-
+  vcr = viewChild('listContainer', { read: ViewContainerRef });
   createTask() {
-    this.taskService.addTask(this.descriptionValue);
+    console.log("creating task");
+    let check = this.vcr()?.createComponent(TaskComponent);
+    console.log("vcr:", this.vcr);
+
   }
 }

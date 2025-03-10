@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-task-item',
@@ -7,10 +8,11 @@ import { MatListModule } from '@angular/material/list';
   templateUrl: './task-item.component.html',
   styleUrl: './task-item.component.scss'
 })
+
 export class TaskComponent {
-  Title : string = ""
-  Description : string = ""
-  Type : string = ""
-  CreatedOn : string = ""
-  Satus : string = ""
+  title = "";
+  type = "";
+  description : String = '';
+  createdOn = Date();
+  status = "";
 }

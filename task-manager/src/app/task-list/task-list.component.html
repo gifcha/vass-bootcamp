@@ -1,5 +1,8 @@
 <div id="list-div">
+  <app-task-create #taskCreator></app-task-create>
   <mat-list>
-    <app-task-item></app-task-item>
+    @for(task of taskList; track task.description){
+      <app-task-item></app-task-item>
+    }
   </mat-list>
 <div>
