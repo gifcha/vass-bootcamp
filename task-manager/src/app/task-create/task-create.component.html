@@ -3,16 +3,16 @@
 
 <div id="task-create-div">
   <mat-form-field appearance="fill">
-    <input [formControl]="titleInput" matInput type="text" class="input" id="Title" name="Title" placeholder="Title" required/>
+    <input [(ngModel)]="titleInput" matInput type="text" class="input" id="Title" name="Title" placeholder="Title" required/>
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <input [formControl]="descriptionInput" matInput type="text" class="input" id="Description" name="Description" placeholder="Description" required/>
+    <input [(ngModel)]="descriptionInput" matInput type="text" class="input" id="Description" name="Description" placeholder="Description" required/>
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <input [formControl]="typeInput" matInput type="text" class="input" id="Type" name="Type" placeholder="Type" required/>
+    <input [(ngModel)]="typeInput" matInput type="text" class="input" id="Type" name="Type" placeholder="Type" required/>
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <input [formControl]="statusInput" matInput type="text" class="input" id="Status" name="Status" placeholder="Status" required/>
+    <input [(ngModel)]="statusInput" matInput type="text" class="input" id="Status" name="Status" placeholder="Status" required/>
   </mat-form-field>
 
   <button mat-flat-button id="create-task-btn" (click)="createTask()" >Create task</button>
