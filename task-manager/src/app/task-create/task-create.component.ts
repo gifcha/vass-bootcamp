@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button';
-import { TaskService, Task} from '../task.service';
+import { TaskService } from '../task.service';
+import { Task, createTask } from '../task.module';
 
 @Component({
   selector: 'app-task-create',
@@ -12,21 +13,28 @@ import { TaskService, Task} from '../task.service';
     MatInputModule,
     MatButtonModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './task-create.component.html',
   styleUrl: './task-create.component.scss'
 })
 
 export class TaskCreateComponent {
-  titleInput = "";
-  descriptionInput = "";
-  typeInput = "";
-  statusInput = "";
+  titleInput = new FormControl("");
+  descriptionInput = new FormControl("");
+  typeInput = new FormControl("");
+  statusInput = new FormControl("");
 
   taskService = inject(TaskService);
 
   createTask() {
-    let task = new Task(this.titleInput, this.typeInput, this.descriptionInput, this.statusInput);
+    let task : Task = createTask(
+      this.titleInput.value!,
+      this.typeInput.value!,
+      this.descriptionInput.value!,
+      this.statusInput.value!
+    );
+
     this.taskService.addTask(task);
   }
 }
