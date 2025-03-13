@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button';
 import { TaskService } from '../task.service';
-import { Task, createTask } from '../task.module';
+import { Task, createTask } from '../task.model';
 
 @Component({
   selector: 'app-task-create',
@@ -13,28 +13,48 @@ import { Task, createTask } from '../task.module';
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './task-create.component.html',
   styleUrl: './task-create.component.scss'
 })
 
 export class TaskCreateComponent {
-  titleInput = new FormControl("");
-  descriptionInput = new FormControl("");
-  typeInput = new FormControl("");
-  statusInput = new FormControl("");
+  taskCreateForm = new FormGroup({
+    title : new FormControl(""),
+    description : new FormControl(""),
+    type : new FormControl(""),
+    status : new FormControl("")
+  });
 
   taskService = inject(TaskService);
 
-  createTask() {
-    let task : Task = createTask(
-      this.titleInput.value!,
-      this.typeInput.value!,
-      this.descriptionInput.value!,
-      this.statusInput.value!
-    );
+  formHasEmptyFields() : boolean {
+    for (const field in this.taskCreateForm.controls) { // field is a string
+      const control = this.taskCreateForm.get(field);
+      if (control !== null && (control.value === null || control.value === "")) { // control !== null seems to be redundant but IDE complains
+        return true;
+      }
+    }
 
-    this.taskService.addTask(task);
+    return false;
   }
+
+  createTask() {
+    if (this.formHasEmptyFields() === false) {
+      let task : Task = createTask(
+        this.taskCreateForm.controls.title.value,
+        this.taskCreateForm.controls.type.value,
+        this.taskCreateForm.controls.description.value,
+        this.taskCreateForm.controls.status.value
+      );
+
+      this.taskService.addTask(task);
+    }
+    else {
+      alert("Please fill in all fields");
+    }
+  }
+
 }
+

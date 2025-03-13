@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from './task.module';
+import { Task } from './task.model';
 
 
 @Injectable({
