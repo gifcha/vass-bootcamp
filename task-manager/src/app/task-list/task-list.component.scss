@@ -1,0 +1,51 @@
+#list-div {
+  width: auto;
+  height: 100vh;
+  background-color: #301E67;
+}
+
+
+#list-item-div {
+  display: flex;
+  background-color: green;
+  width: 100%;
+}
+
+mat-card {
+  color: white;
+  border-radius: 0px;
+  display: table;
+  width: 100%;
+  min-height: 5vh;
+  table-layout: fixed;
+}
+
+mat-card:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+mat-card:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+mat-card-content {
+  color: white;
+  display: table-cell;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow-wrap: break-word;
+}
+
+// fixes padding for 1st child of mat-card
+.mat-mdc-card-content:first-child {
+  padding-top: 0;
+  padding-left: 1vw;
+}
+
+#delete-task-btn {
+  width: 100%;
+}
