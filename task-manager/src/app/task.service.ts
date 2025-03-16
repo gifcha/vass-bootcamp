@@ -7,17 +7,17 @@ import { Task } from './task.model';
 })
 
 export class TaskService {
-  protected taskList : Task[] = [];
+  protected taskList: Task[] = [];
 
-  getTaskList() : Task[] {
+  getTaskList(): Task[] {
     return this.taskList;
   }
 
-  addTask(task : Task) {
+  addTask(task: Task) {
     this.taskList.push(task);
   }
 
-  removeTaskById(id : number) {
+  removeTaskById(id: number) {
     let index = this.taskList.findIndex((task) => task.id === id)
     this.taskList.splice(index, 1);
   }

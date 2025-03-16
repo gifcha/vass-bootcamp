@@ -14,14 +14,14 @@ import { Task } from '../task.model';
 
 
 export class TaskListComponent {
-  taskList : Task[] = [];
+  taskList: Task[] = [];
   taskService = inject(TaskService);
 
   constructor() {
     this.taskList = this.taskService.getTaskList();
   }
 
-  removeTaskById(id : number) {
+  removeTaskById(id: number) {
     this.taskService.removeTaskById(id);
   }
 }
