@@ -11,14 +11,14 @@ export type Task = {
 // will be refactored when database is implemented
 let lastTaskId = 0;
 
-export function createTask(title: string, type: string, description: string, status: string): Task {
+export function createTaskFromObj(valueObj: { title: string, type: string, description: string, status: string } ): Task {
   lastTaskId += 1;
   return {
     id: lastTaskId,
-    title,
-    type,
-    description,
-    status,
+    title: valueObj.title,
+    type: valueObj.type,
+    description: valueObj.description,
+    status: valueObj.status,
     createdOn: new Date().toLocaleDateString("en-GB"),
   }
 }

@@ -1,6 +1,6 @@
-<div id="list-div">
+<div id="list-container">
   <app-task-create></app-task-create>
-  <div id="task-div">
+  <div id="task-container">
     @for(task of taskList; track task){
       <mat-card appearance="outlined">
         <mat-card-content>{{task.title}}</mat-card-content>
