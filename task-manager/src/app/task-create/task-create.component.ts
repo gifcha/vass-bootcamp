@@ -30,7 +30,7 @@ export class TaskCreateComponent {
   taskService = inject(TaskService);
 
   createTask() {
-    let values : any = this.taskCreateForm.getRawValue();
+    let values = this.taskCreateForm.getRawValue();
     let task: Task = createTaskFromObj(values);
 
     this.taskService.addTask(task);
