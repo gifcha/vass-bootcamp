@@ -21,6 +21,4 @@ export class TaskService {
     let index = this.taskList.findIndex((task) => task.id === id)
     this.taskList.splice(index, 1);
   }
-
-  constructor() { }
 }

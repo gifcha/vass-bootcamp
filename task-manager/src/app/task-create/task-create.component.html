@@ -1,7 +1,7 @@
 <!--Task Data Model should consist of these fields:-->
 <!--Title, Description, Type, CreatedOn, Status-->
 
-<div id="task-create-div" [formGroup]="taskCreateForm">
+<form id="task-create-form" [formGroup]="taskCreateForm">
   <mat-form-field appearance="fill">
     <input formControlName="title" matInput type="text" class="input" id="Title" name="Title" placeholder="Title" required/>
   </mat-form-field>
@@ -16,4 +16,4 @@
   </mat-form-field>
 
   <button mat-flat-button id="create-task-btn" (click)="createTask()" >Create task</button>
-</div>
+</form>
