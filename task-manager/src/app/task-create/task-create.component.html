@@ -1,6 +1,3 @@
-<!--Task Data Model should consist of these fields:-->
-<!--Title, Description, Type, CreatedOn, Status-->
-
 <form id="task-create-form" [formGroup]="taskCreateForm">
   <mat-form-field appearance="fill" hideRequiredMarker=true>
     <mat-label>Title</mat-label>
@@ -44,9 +41,6 @@
       <mat-hint>Status can't be empty</mat-hint>
     }
   </mat-form-field>
-
-  <!--  <input formControlName="status" matInput type="text" class="input" id="Status" name="Status" placeholder="Status" required/>-->
-  <!--</mat-form-field>-->
 
   <button mat-flat-button id="create-task-btn" (click)="createTask()" >Create task</button>
 </form>

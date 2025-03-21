@@ -35,10 +35,15 @@ export class TaskCreateComponent {
   taskService = inject(TaskService);
 
   createTask() {
+<<<<<<< HEAD
     if (this.taskCreateForm.valid) {
       let values = this.taskCreateForm.getRawValue();
       let task: Task = createTaskFromObj(values);
       this.taskService.addTask(task);
+=======
+    let values : any = this.taskCreateForm.getRawValue();
+    let task: Task = createTaskFromObj(values);
+>>>>>>> parent of 08f82a66 (removed any)
 
       this.showValidatorError = false;
     }
