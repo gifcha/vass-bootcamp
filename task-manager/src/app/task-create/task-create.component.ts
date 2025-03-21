@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule, FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormsModule, FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button';
 import { TaskService } from '../task.service';
 import { Task, createTaskFromObj } from '../task.model';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-task-create',
@@ -13,13 +14,16 @@ import { Task, createTaskFromObj } from '../task.model';
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   templateUrl: './task-create.component.html',
   styleUrl: './task-create.component.scss'
 })
 
 export class TaskCreateComponent {
+  showValidatorError = false;
+
   taskCreateForm = new FormGroup({
     title: new FormControl("", {nonNullable: true}),
     description: new FormControl("", {nonNullable: true}),
@@ -27,13 +31,24 @@ export class TaskCreateComponent {
     status: new FormControl("", {nonNullable: true})
   });
 
+
   taskService = inject(TaskService);
 
   createTask() {
-    let values = this.taskCreateForm.getRawValue();
-    let task: Task = createTaskFromObj(values);
+    if (this.taskCreateForm.valid) {
+      let values = this.taskCreateForm.getRawValue();
+      let task: Task = createTaskFromObj(values);
+      this.taskService.addTask(task);
 
-    this.taskService.addTask(task);
+      this.showValidatorError = false;
+    }
+    else {
+      this.showValidatorError = true;
+    }
+  }
+
+  constructor() {
+    this.taskCreateForm.addValidators(Validators.required)
   }
 
 }
