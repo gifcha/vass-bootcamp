@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule, FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, FormControl, ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button';
@@ -24,11 +24,12 @@ import { MatSelectModule } from '@angular/material/select';
 export class TaskCreateComponent {
   showValidatorError = false;
 
+  formBuilder = new FormBuilder().nonNullable;
   taskCreateForm = new FormGroup({
-    title: new FormControl("", {nonNullable: true}),
-    description: new FormControl("", {nonNullable: true}),
-    type: new FormControl("", {nonNullable: true}),
-    status: new FormControl("", {nonNullable: true})
+    title: this.formBuilder.control("", Validators.required),
+    description: this.formBuilder.control("", Validators.required),
+    type: this.formBuilder.control("", Validators.required),
+    status: this.formBuilder.control("", Validators.required)
   });
 
 
@@ -45,10 +46,6 @@ export class TaskCreateComponent {
     else {
       this.showValidatorError = true;
     }
-  }
-
-  constructor() {
-    this.taskCreateForm.addValidators(Validators.required)
   }
 
 }
