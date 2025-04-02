@@ -1,5 +1,5 @@
 <form id="task-create-form" [formGroup]="taskCreateForm">
-  <mat-form-field appearance="fill" hideRequiredMarker={{this.taskCreateForm.controls.title.valid}}>
+  <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.title.valid>
     <mat-label>Title</mat-label>
     <input formControlName="title" matInput type="text" class="input" id="Title" name="Title" placeholder="Title" required/>
     @if(this.taskCreateForm.controls.title.invalid && this.showValidatorError) {
@@ -7,7 +7,7 @@
     }
   </mat-form-field>
 
-  <mat-form-field appearance="fill" hideRequiredMarker={{this.taskCreateForm.controls.description.valid}}>
+  <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.description.valid>
     <mat-label>Description</mat-label>
     <input formControlName="description" matInput type="text" class="input" id="Description" name="Description" placeholder="Description" required/>
 
@@ -16,7 +16,7 @@
     }
   </mat-form-field>
 
-  <mat-form-field appearance="fill" hideRequiredMarker={{this.taskCreateForm.controls.type.valid}}>
+  <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.type.valid>
     <mat-label>Type</mat-label>
     <mat-select formControlName="type" type="text" id="Type" name="Type" required>
       <mat-option value="Normal">Normal</mat-option>
@@ -29,7 +29,7 @@
     }
   </mat-form-field>
 
-  <mat-form-field appearance="fill" hideRequiredMarker={{this.taskCreateForm.controls.status.valid}}>
+  <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.status.valid>
     <mat-label>Status</mat-label>
     <mat-select formControlName="status" type="text" id="Status" name="Status" required>
       <mat-option value="Todo">Todo</mat-option>
