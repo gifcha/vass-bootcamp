@@ -3,9 +3,14 @@
   width: auto;
   height: 4em;
   border-radius: 5px;
+  margin-bottom: 1.25em;
 }
 
 .input {
   width: 10vw;
   height: 8vh;
+}
+
+mat-hint {
+  color: #ff4d4d;
 }

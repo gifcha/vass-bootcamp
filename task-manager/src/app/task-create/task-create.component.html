@@ -1,18 +1,45 @@
-<!--Task Data Model should consist of these fields:-->
-<!--Title, Description, Type, CreatedOn, Status-->
-
 <form id="task-create-form" [formGroup]="taskCreateForm">
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.title.valid>
+    <mat-label>Title</mat-label>
     <input formControlName="title" matInput type="text" class="input" id="Title" name="Title" placeholder="Title" required/>
+    @if(this.taskCreateForm.controls.title.invalid && this.showValidatorError) {
+      <mat-hint>Title can't be empty</mat-hint>
+    }
   </mat-form-field>
-  <mat-form-field appearance="fill">
+
+  <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.description.valid>
+    <mat-label>Description</mat-label>
     <input formControlName="description" matInput type="text" class="input" id="Description" name="Description" placeholder="Description" required/>
+
+    @if(this.taskCreateForm.controls.description.invalid && this.showValidatorError) {
+      <mat-hint>Description can't be empty</mat-hint>
+    }
   </mat-form-field>
-  <mat-form-field appearance="fill">
-    <input formControlName="type" matInput type="text" class="input" id="Type" name="Type" placeholder="Type" required/>
+
+  <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.type.valid>
+    <mat-label>Type</mat-label>
+    <mat-select formControlName="type" type="text" id="Type" name="Type" required>
+      <mat-option value="Normal">Normal</mat-option>
+      <mat-option value="Optional">Optional</mat-option>
+      <mat-option value="Urgent">Urgent</mat-option>
+    </mat-select>
+
+    @if(this.taskCreateForm.controls.type.invalid && this.showValidatorError) {
+      <mat-hint>Type can't be empty</mat-hint>
+    }
   </mat-form-field>
-  <mat-form-field appearance="fill">
-    <input formControlName="status" matInput type="text" class="input" id="Status" name="Status" placeholder="Status" required/>
+
+  <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.status.valid>
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status" type="text" id="Status" name="Status" required>
+      <mat-option value="Todo">Todo</mat-option>
+      <mat-option value="In progress">In progress</mat-option>
+      <mat-option value="Completed">Completed</mat-option>
+    </mat-select>
+
+    @if(this.taskCreateForm.controls.status.invalid && this.showValidatorError) {
+      <mat-hint>Status can't be empty</mat-hint>
+    }
   </mat-form-field>
 
   <button mat-flat-button id="create-task-btn" (click)="createTask()" >Create task</button>
