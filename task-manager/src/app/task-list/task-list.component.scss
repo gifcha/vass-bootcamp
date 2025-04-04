@@ -5,6 +5,7 @@
 #task-container {
   background-color: #202020;
   height: 100vh;
+  border-radius: 10px;
 }
 
 
@@ -34,6 +35,12 @@ mat-card-content {
   padding: 10px;
   height: 100%;
   overflow-wrap: break-word;
+}
+
+#title-card {
+ background-color: #202020;
+ border-bottom-right-radius: 0;
+ border-bottom-left-radius: 0;
 }
 
 // fixes padding for 1st child of mat-card
