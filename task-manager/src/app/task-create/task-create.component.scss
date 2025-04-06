@@ -1,16 +1,41 @@
 #create-task-btn {
-  margin-left: 1vw;
+  margin-left: 8vw;
   width: auto;
   height: 4em;
-  border-radius: 5px;
+  max-width: 25em;
   margin-bottom: 1.25em;
+  text-align: center;
+}
+
+#task-create-container {
+  min-height: 30em;
+  height: 100%;
+  min-width: 50em;
+  background: #202020;
+  padding-top: 5em;
+  padding-bottom: 5em;
+  border-radius: 30px;
+}
+
+#task-create-form {
+  display: grid;
+  margin-left: 5vw;
+  margin-right: 5vw;
 }
 
 .input {
-  width: 10vw;
   height: 8vh;
+  width: 100%;
+}
+
+#Description {
+  height: 10em;
 }
 
 mat-hint {
   color: #ff4d4d;
+}
+
+h1 {
+  color: white;
 }
