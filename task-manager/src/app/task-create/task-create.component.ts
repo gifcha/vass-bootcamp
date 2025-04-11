@@ -34,6 +34,8 @@ export class TaskCreateComponent {
     status: this.formBuilder.control("", Validators.required)
   });
 
+  taskTypes: String[] = ["Normal", "Optional", "Urgent"]
+  taskStatuses: String[] = ["Todo", "In progress", "Completed"]
 
   taskService = inject(TaskService);
 

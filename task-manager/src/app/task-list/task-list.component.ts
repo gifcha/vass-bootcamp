@@ -7,7 +7,6 @@ import { Task } from '../task.model';
 import { MatButtonModule } from '@angular/material/button';
 import { Dialog } from '@angular/cdk/dialog';
 import { Router } from '@angular/router';
-import { routes } from '../app.routes';
 
 @Component({
   selector: 'app-task-list',
@@ -29,6 +28,7 @@ export class TaskListComponent {
 
   constructor(private router: Router) {
     this.taskList = this.taskService.getTaskList();
+
     if (this.router.url === '/task-create') {
       this.openCreateTask();
     }
