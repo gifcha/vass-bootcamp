@@ -35,7 +35,7 @@ export class TaskCreateComponent {
   });
 
   taskTypes: String[] = ["Normal", "Optional", "Urgent"]
-  taskStatuses: String[] = ["Todo", "In progress", "Completed"]
+  taskStatuses: String[] = ["To do", "In progress", "Completed"]
 
   taskService = inject(TaskService);
 

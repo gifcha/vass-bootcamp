@@ -25,7 +25,7 @@
       <mat-label>Type</mat-label>
       <mat-select formControlName="type" type="text" id="Type" name="Type" required>
         @for(option of taskTypes; track option) {
-          <mat-option value=[option]>{{option}}</mat-option>
+          <mat-option value={{option}}>{{option}}</mat-option>
         }
       </mat-select>
 
@@ -39,7 +39,7 @@
       <mat-label>Status</mat-label>
       <mat-select formControlName="status" type="text" id="Status" name="Status" required>
         @for(option of taskStatuses; track option) {
-          <mat-option value=[option]>{{option}}</mat-option>
+          <mat-option value={{option}}>{{option}}</mat-option>
         }
       </mat-select>
 
