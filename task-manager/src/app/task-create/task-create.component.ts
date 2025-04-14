@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TaskService } from '../task.service';
 import { Task, createTaskFromObj } from '../task.model';
 import { MatSelectModule } from '@angular/material/select';
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-task-create',
@@ -23,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 export class TaskCreateComponent {
   showValidatorError = false;
+  dialog: DialogRef<unknown, TaskCreateComponent> | null = null; // reference to dialoge box this component is in
 
   formBuilder = new FormBuilder().nonNullable;
   taskCreateForm = new FormGroup({
@@ -32,6 +34,8 @@ export class TaskCreateComponent {
     status: this.formBuilder.control("", Validators.required)
   });
 
+  taskTypes: String[] = ["Normal", "Optional", "Urgent"]
+  taskStatuses: String[] = ["To do", "In progress", "Completed"]
 
   taskService = inject(TaskService);
 
@@ -42,6 +46,9 @@ export class TaskCreateComponent {
       this.taskService.addTask(task);
 
       this.showValidatorError = false;
+      if (this.dialog != null) {
+        this.dialog.close();
+      }
     }
     else {
       this.showValidatorError = true;
