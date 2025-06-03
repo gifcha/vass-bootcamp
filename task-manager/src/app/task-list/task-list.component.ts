@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Dialog } from '@angular/cdk/dialog';
 import { Router } from '@angular/router';
+import { Task } from '../task.model';
 
 @Component({
   selector: 'app-task-list',
@@ -20,18 +21,12 @@ import { Router } from '@angular/router';
 
 
 export class TaskListComponent {
+  tasks: Task[] = [];
 
   constructor(private router: Router, private dialog: Dialog, public taskService: TaskService) {
     // get task list
-    this.taskService.getTaskList().subscribe({
-      next: (tasks) => {
-        this.taskService.taskList = tasks;
-      },
-
-      error: (err) => {
-        console.error("getTaskList failed: " + err.message)
-      }
-    });
+    this.taskService.tasks.subscribe(data => this.tasks = data);
+    this.taskService.getTaskList();
 
     if (this.router.url === '/task-create') {
       this.openCreateTask();
@@ -39,16 +34,7 @@ export class TaskListComponent {
   }
 
   removeTaskById(id: string) {
-    this.taskService.removeTaskById(id).subscribe({
-      next: (res) => {
-        let index = this.taskService.taskList.findIndex((task) => task.id === id)
-        this.taskService.taskList.splice(index, 1);
-      },
-
-      error: (err) => {
-        console.error("getTaskList failed: " + err.message)
-      }
-    });
+    this.taskService.removeTaskById(id);
   }
 
   openCreateTask() {

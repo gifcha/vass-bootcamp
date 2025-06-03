@@ -1,3 +1,4 @@
 export const environment = {
-  taskApiUrl: 'http://localhost:8080/api/tasks'
+  apiBaseUrl: 'http://localhost:8080/api/',
+  taskApiUrl: 'tasks'
 };

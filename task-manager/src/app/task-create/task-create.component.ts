@@ -43,15 +43,7 @@ export class TaskCreateComponent {
     if (this.taskCreateForm.valid) {
       let values = this.taskCreateForm.getRawValue();
       let task: Task = createTaskFromObj(values);
-      this.taskService.addTask(task).subscribe({
-        next: (addedTask) => {
-          this.taskService.taskList.push(addedTask);
-        },
-
-        error: (err) => {
-          console.error("createTask failed: " + err.message)
-        }
-      });
+      this.taskService.addTask(task);
 
       this.showValidatorError = false;
       if (this.dialog != null) {

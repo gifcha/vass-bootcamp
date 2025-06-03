@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../environments/environment.dev';
 
 
@@ -10,38 +10,41 @@ import { environment } from '../environments/environment.dev';
 })
 
 export class TaskService {
-  public taskList: Task[] = [];
+  private taskUrl = environment.apiBaseUrl + environment.taskApiUrl;
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  public tasks = this.tasksSubject.asObservable();
+
 
   constructor(private http: HttpClient) {}
 
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred';
-
-    if (error.error instanceof ErrorEvent) {
-      // Client-side or network error
-      console.error('Client-side error:', error.error.message);
-      errorMessage = `A client-side error occurred: ${error.error.message}`;
-    } else {
-      // Server-side error
-      console.error(`Server error (${error.status}):`, error.error);
-      errorMessage = `Server returned code ${error.status}, message was: ${error.message}`;
-    }
-
-    return throwError(() => new Error(errorMessage));
+    console.error(`Error occurred Status: ${error.status}, Message: ${error.message}`);
+    return throwError(() => error);
   }
 
 
-  getTaskList(): Observable<Task[]> {
-    return this.http.get<Task[]>(environment.taskApiUrl);
+  getTaskList(): void {
+    this.http.get<Task[]>(this.taskUrl)
+    .pipe(catchError(this.handleError))
+    .subscribe(tasks => {
+      this.tasksSubject.next(tasks);
+    });
   }
 
-  addTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(environment.taskApiUrl, task).pipe(
-      catchError(this.handleError));
+  addTask(task: Task): void {
+    this.http.post<Task>(this.taskUrl, task).subscribe(
+      createdTask => {
+        console.log(createdTask);
+        const currentTasks = this.tasksSubject.value;
+        this.tasksSubject.next([...currentTasks, createdTask]);
+      });
   }
 
-  removeTaskById(id: string): Observable<Object>{
-    return this.http.delete(environment.taskApiUrl + "/" + id).pipe(
-      catchError(this.handleError));
+  removeTaskById(id: string): void {
+    this.http.delete<Task[]>(this.taskUrl + "/" + id)
+    .pipe(catchError(this.handleError))
+    .subscribe(tasks => {
+      this.tasksSubject.next(tasks);
+    });
   }
 }
