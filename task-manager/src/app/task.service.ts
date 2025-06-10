@@ -12,7 +12,7 @@ import { environment } from '../environments/environment.dev';
 export class TaskService {
   private taskUrl = environment.apiBaseUrl + environment.taskApiUrl;
   private tasksSubject = new BehaviorSubject<Task[]>([]);
-  public tasks = this.tasksSubject.asObservable();
+  public tasks$ = this.tasksSubject.asObservable();
 
 
   constructor(private http: HttpClient) {}

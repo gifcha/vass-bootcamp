@@ -7,13 +7,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { Dialog } from '@angular/cdk/dialog';
 import { Router } from '@angular/router';
 import { Task } from '../task.model';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-list',
   imports: [
     MatListModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    AsyncPipe
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
@@ -21,11 +24,11 @@ import { Task } from '../task.model';
 
 
 export class TaskListComponent {
-  tasks: Task[] = [];
+  tasks$: Observable<Task[]>;
 
   constructor(private router: Router, private dialog: Dialog, public taskService: TaskService) {
     // get task list
-    this.taskService.tasks.subscribe(data => this.tasks = data);
+    this.tasks$ = this.taskService.tasks$;
     this.taskService.getTaskList();
 
     if (this.router.url === '/task-create') {
@@ -42,5 +45,6 @@ export class TaskListComponent {
       if (d.componentRef) {
           d.componentRef.instance.dialog = d;
       }
+
   }
 }
