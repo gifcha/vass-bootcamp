@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule, FormControl, ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TaskService } from '../task.service';
 import { Task, createTaskFromObj } from '../task.model';
 import { MatSelectModule } from '@angular/material/select';
-import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-task-create',
@@ -37,7 +37,7 @@ export class TaskCreateComponent {
   taskTypes: String[] = ["Normal", "Optional", "Urgent"]
   taskStatuses: String[] = ["To do", "In progress", "Completed"]
 
-  taskService = inject(TaskService);
+  constructor(public taskService: TaskService) {}
 
   createTask() {
     if (this.taskCreateForm.valid) {

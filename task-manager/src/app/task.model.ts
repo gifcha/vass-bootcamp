@@ -1,5 +1,5 @@
 export type Task = {
-  id: number;
+  id: string;
   title: string;
   type: string;
   description: string;
@@ -7,14 +7,10 @@ export type Task = {
   createdOn: string;
 }
 
-// lastTaskId is temporary
-// will be refactored when database is implemented
-let lastTaskId = 0;
 
 export function createTaskFromObj(valueObj: { title: string, type: string, description: string, status: string } ): Task {
-  lastTaskId += 1;
   return {
-    id: lastTaskId,
+    id: "",
     title: valueObj.title,
     type: valueObj.type,
     description: valueObj.description,

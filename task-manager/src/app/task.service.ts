@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task.model';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { environment } from '../environments/environment.dev';
 
 
 @Injectable({
@@ -7,18 +10,41 @@ import { Task } from './task.model';
 })
 
 export class TaskService {
-  protected taskList: Task[] = [];
+  private taskUrl = environment.apiBaseUrl + environment.taskApiUrl;
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  public tasks$ = this.tasksSubject.asObservable();
 
-  getTaskList(): Task[] {
-    return this.taskList;
+
+  constructor(private http: HttpClient) {}
+
+  private handleError(error: HttpErrorResponse) {
+    console.error(`Error occurred Status: ${error.status}, Message: ${error.message}`);
+    return throwError(() => error);
   }
 
-  addTask(task: Task) {
-    this.taskList.push(task);
+
+  getTaskList(): void {
+    this.http.get<Task[]>(this.taskUrl)
+    .pipe(catchError(this.handleError))
+    .subscribe(tasks => {
+      this.tasksSubject.next(tasks);
+    });
   }
 
-  removeTaskById(id: number) {
-    let index = this.taskList.findIndex((task) => task.id === id)
-    this.taskList.splice(index, 1);
+  addTask(task: Task): void {
+    this.http.post<Task>(this.taskUrl, task).subscribe(
+      createdTask => {
+        console.log(createdTask);
+        const currentTasks = this.tasksSubject.value;
+        this.tasksSubject.next([...currentTasks, createdTask]);
+      });
+  }
+
+  removeTaskById(id: string): void {
+    this.http.delete<Task[]>(this.taskUrl + "/" + id)
+    .pipe(catchError(this.handleError))
+    .subscribe(tasks => {
+      this.tasksSubject.next(tasks);
+    });
   }
 }
