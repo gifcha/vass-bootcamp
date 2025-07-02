@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { MatListModule } from '@angular/material/list';
 import { TaskCreateComponent } from '../task-create/task-create.component';
 import { TaskService } from '../task.service';
+import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Dialog } from '@angular/cdk/dialog';

@@ -1,0 +1,52 @@
+#user-container {
+  background-color: #202020;
+  min-height: 75vh;
+  height: 100%;
+  border-radius: 10px;
+  border-color: cyan;
+  border-width: 2px;
+  border-style: solid;
+}
+
+mat-card {
+  color: white;
+  background-color: #202020;
+  border-radius: 0px;
+  display: table;
+  width: 100%;
+  min-height: 5vh;
+  table-layout: fixed;
+}
+
+mat-card-content {
+  color: white;
+  display: table-cell;
+  text-align: left;
+  padding: 10px;
+  height: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  border-left: solid gray;
+  border-radius: 10px;
+}
+
+mat-card:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+mat-card:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#title-card {
+  background-color: #292929;
+}
+
+#title-card mat-card-content {
+  border-color: #505050;
+  border-radius: 5px;
+  color: #B0B0B0;
+}
