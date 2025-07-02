@@ -24,13 +24,13 @@ export class UserService {
   getUserList(): void {
     this.http.get<User[]>(this.userUrl)
     .pipe(catchError(this.handleError))
-    .subscribe(tasks => {
-      this.usersSubject.next(tasks);
+    .subscribe(users => {
+      this.usersSubject.next(users);
     });
   }
 
-  addUser(task: User): void {
-    this.http.post<User>(this.userUrl, task).subscribe(
+  addUser(user: User): void {
+    this.http.post<User>(this.userUrl, user).subscribe(
       createdUser => {
         console.log(createdUser);
         const currentUsers = this.usersSubject.value;
