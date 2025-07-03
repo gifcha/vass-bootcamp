@@ -7,6 +7,10 @@ import { TaskService } from '../task.service';
 import { Task, createTaskFromObj } from '../task.model';
 import { MatSelectModule } from '@angular/material/select';
 import { DialogRef } from '@angular/cdk/dialog';
+import { UserService } from '../user.service';
+import { Observable } from 'rxjs';
+import { User } from '../user.model';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-create',
@@ -16,7 +20,8 @@ import { DialogRef } from '@angular/cdk/dialog';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    AsyncPipe
   ],
   templateUrl: './task-create.component.html',
   styleUrl: './task-create.component.scss'
@@ -31,17 +36,23 @@ export class TaskCreateComponent {
     title: this.formBuilder.control("", Validators.required),
     description: this.formBuilder.control("", Validators.required),
     type: this.formBuilder.control("", Validators.required),
-    status: this.formBuilder.control("", Validators.required)
+    status: this.formBuilder.control("", Validators.required),
+    assignedto: this.formBuilder.control("UNASSIGNED", Validators.required)
   });
 
   taskTypes: String[] = ["Normal", "Optional", "Urgent"]
   taskStatuses: String[] = ["To do", "In progress", "Completed"]
+  users$: Observable<User[]>;
 
-  constructor(public taskService: TaskService) {}
+
+  constructor(public taskService: TaskService, public userService: UserService) {
+    this.users$ = this.userService.users$;
+    this.userService.getUserList();
+  }
 
   createTask() {
     if (this.taskCreateForm.valid) {
-      let values = this.taskCreateForm.getRawValue();
+      let values = this.taskCreateForm.getRawValue()
       let task: Task = createTaskFromObj(values);
       this.taskService.addTask(task);
 

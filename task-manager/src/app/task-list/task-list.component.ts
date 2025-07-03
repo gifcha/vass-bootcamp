@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { Task } from '../task.model';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { UserService } from '../user.service';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-task-list',
@@ -25,11 +27,30 @@ import { AsyncPipe } from '@angular/common';
 
 export class TaskListComponent {
   tasks$: Observable<Task[]>;
+  users$: Observable<User[]>;
+  userMap = new Map<String, User>();
 
-  constructor(private router: Router, private dialog: Dialog, public taskService: TaskService) {
+  constructor(
+    private router: Router,
+    private dialog: Dialog,
+    public taskService: TaskService,
+    public userService: UserService
+  )
+  {
     // get task list
     this.tasks$ = this.taskService.tasks$;
     this.taskService.getTaskList();
+
+    this.users$ = this.userService.users$;
+    this.userService.getUserList();
+
+    this.users$.subscribe(users => {
+      for (let user of users) {
+        this.userMap.set(user.id, user);
+      }
+    });
+
+
 
     if (this.router.url === '/task-create') {
       this.openCreateTask();
@@ -45,6 +66,13 @@ export class TaskListComponent {
       if (d.componentRef) {
           d.componentRef.instance.dialog = d;
       }
+  }
 
+  getAssignedUsername(id: String): String {
+    let username = this.userMap.get(id)?.username;
+    if (username) {
+      return username;
+    }
+    else { return ""; }
   }
 }

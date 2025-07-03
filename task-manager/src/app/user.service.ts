@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from './user.model';
 import { environment } from '../environments/environment.dev';
-import { BehaviorSubject, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -29,6 +29,10 @@ export class UserService {
     });
   }
 
+  getUserById(id: String): Observable<User> {
+    return this.http.get<User>(`${this.userUrl}/${id}`);
+  }
+
   addUser(user: User): void {
     this.http.post<User>(this.userUrl, user).subscribe(
       createdUser => {
@@ -37,5 +41,4 @@ export class UserService {
         this.usersSubject.next([...currentUsers, createdUser]);
       });
   }
-
 }

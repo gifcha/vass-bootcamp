@@ -6,7 +6,7 @@
   <div id="task-container">
     <mat-card id="title-card" appearance="outlined">
       <mat-card-content>Title</mat-card-content>
-      <mat-card-content>Description</mat-card-content>
+      <mat-card-content>Assigned To</mat-card-content>
       <mat-card-content>Type</mat-card-content>
       <mat-card-content>Status</mat-card-content>
       <mat-card-content>Created On</mat-card-content>
@@ -14,10 +14,10 @@
     @for(task of (this.tasks$ | async); track task){
       <mat-card appearance="outlined">
         <mat-card-content>{{task.title}}</mat-card-content>
-        <mat-card-content>{{task.description}}</mat-card-content>
+        <mat-card-content>{{getAssignedUsername(task.assignedto)}}</mat-card-content>
         <mat-card-content>{{task.type}}</mat-card-content>
         <mat-card-content>{{task.status}}</mat-card-content>
-        <mat-card-content>{{task.createdOn}}</mat-card-content>
+        <mat-card-content>{{task.createdon}}</mat-card-content>
         <button (click)="removeTaskById(task.id)" mat-flat-button id="delete-task-btn">Delete</button>
       </mat-card>
     }
