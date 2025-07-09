@@ -40,8 +40,8 @@ export class TaskCreateComponent {
     assignedto: this.formBuilder.control("UNASSIGNED", Validators.required)
   });
 
-  taskTypes: String[] = ["Normal", "Optional", "Urgent"]
-  taskStatuses: String[] = ["To do", "In progress", "Completed"]
+  taskTypes: string[] = ["Normal", "Optional", "Urgent"]
+  taskStatuses: string[] = ["To do", "In progress", "Completed"]
   users$: Observable<User[]>;
 
 

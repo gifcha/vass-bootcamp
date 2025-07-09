@@ -29,7 +29,7 @@ export class UserService {
     });
   }
 
-  getUserById(id: String): Observable<User> {
+  getUserById(id: string): Observable<User> {
     return this.http.get<User>(`${this.userUrl}/${id}`);
   }
 

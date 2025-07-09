@@ -28,7 +28,7 @@ import { User } from '../user.model';
 export class TaskListComponent {
   tasks$: Observable<Task[]>;
   users$: Observable<User[]>;
-  userMap = new Map<String, User>();
+  userMap = new Map<string, User>();
 
   constructor(
     private router: Router,
@@ -68,7 +68,7 @@ export class TaskListComponent {
       }
   }
 
-  getAssignedUsername(id: String): String {
+  getAssignedUsername(id: string): string {
     let username = this.userMap.get(id)?.username;
     if (username) {
       return username;
