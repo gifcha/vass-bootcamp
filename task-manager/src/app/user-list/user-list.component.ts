@@ -22,6 +22,5 @@ export class UserListComponent {
 
   constructor(public userService: UserService) {
     this.users$ = this.userService.users$;
-    this.userService.getUserList();
   }
 }

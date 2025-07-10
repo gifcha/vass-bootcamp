@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, throwError } from 'rxjs';
 import { environment } from '../environments/environment.dev';
 
 
@@ -15,7 +15,9 @@ export class TaskService {
   public tasks$ = this.tasksSubject.asObservable();
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.fetchTaskList();
+  }
 
   private handleError(error: HttpErrorResponse) {
     console.error(`Error occurred Status: ${error.status}, Message: ${error.message}`);
@@ -23,7 +25,7 @@ export class TaskService {
   }
 
 
-  getTaskList(): void {
+  fetchTaskList(): void {
     this.http.get<Task[]>(this.taskUrl)
     .pipe(catchError(this.handleError))
     .subscribe(tasks => {

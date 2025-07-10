@@ -47,7 +47,6 @@ export class TaskCreateComponent {
 
   constructor(public taskService: TaskService, public userService: UserService) {
     this.users$ = this.userService.users$;
-    this.userService.getUserList();
   }
 
   createTask() {

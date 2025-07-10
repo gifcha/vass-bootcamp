@@ -37,18 +37,15 @@ export class TaskListComponent {
     public userService: UserService
   )
   {
-    // get task list
     this.tasks$ = this.taskService.tasks$;
-    this.taskService.getTaskList();
-
     this.users$ = this.userService.users$;
-    this.userService.getUserList();
 
+    // fill userMap
     this.users$.subscribe(users => {
       for (let user of users) {
         this.userMap.set(user.id, user);
       }
-    });
+    }).unsubscribe();
 
 
 

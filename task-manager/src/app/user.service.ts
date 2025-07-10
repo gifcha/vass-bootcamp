@@ -13,7 +13,9 @@ export class UserService {
   public users$ = this.usersSubject.asObservable();
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.fetchUserList();
+  }
 
   private handleError(error: HttpErrorResponse) {
     console.error(`Error occurred Status: ${error.status}, Message: ${error.message}`);
@@ -21,7 +23,7 @@ export class UserService {
   }
 
 
-  getUserList(): void {
+  fetchUserList(): void {
     this.http.get<User[]>(this.userUrl)
     .pipe(catchError(this.handleError))
     .subscribe(users => {
