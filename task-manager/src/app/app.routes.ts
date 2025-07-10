@@ -3,6 +3,7 @@ import { TaskCreateComponent } from './task-create/task-create.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 import { AppComponent } from './app.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,10 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'task-list',
     pathMatch: 'full'
+  },
+  {
+    path: 'user-list',
+    component: UserListComponent
   },
   {
     path: '**',

@@ -1,0 +1,16 @@
+<h1 id="list-title">Users</h1>
+<div id="user-container">
+  @for(user of (this.users$ | async); track user){
+    <mat-card id="title-card" appearance="outlined">
+      <mat-card-content>Username</mat-card-content>
+      <mat-card-content>First Name</mat-card-content>
+      <mat-card-content>Last Name</mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined">
+      <mat-card-content>{{user.username}}</mat-card-content>
+      <mat-card-content>{{user.firstName}}</mat-card-content>
+      <mat-card-content>{{user.lastName}}</mat-card-content>
+    </mat-card>
+  }
+</div>
