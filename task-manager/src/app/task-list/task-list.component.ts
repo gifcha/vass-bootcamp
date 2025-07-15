@@ -59,10 +59,10 @@ export class TaskListComponent {
   }
 
   openCreateTask() {
-      let d = this.dialog.open(TaskCreateComponent);
-      if (d.componentRef) {
-          d.componentRef.instance.dialog = d;
-      }
+    let d = this.dialog.open(TaskCreateComponent);
+    if (d.componentRef) {
+      d.componentRef.instance.dialog = d;
+    }
   }
 
   getAssignedUsername(id: string): string {
