@@ -18,6 +18,15 @@
   border-style: solid;
 }
 
+#details-container {
+  position:fixed;
+  top: 0;
+  left: 50vw;
+  width: 50vw;
+  height: 100vh;
+  z-index: 100;
+}
+
 #list-title {
   color: white;
   font-size: 3em;
