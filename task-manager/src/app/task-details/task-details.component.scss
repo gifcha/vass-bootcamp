@@ -1,13 +1,37 @@
 #task-details-container {
+  position:fixed;
   min-height: 100vh;
   height: 100%;
-  min-width: 100%;
   background: #202020;
   border-radius: 30px;
   margin: 0;
+  top: 0;
+  right: 0;
+  width: 50%;
+  z-index: 100;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 #content-container {
   padding: 1vh;
   color: white;
+  padding-top: 2vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+
+#grouped-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2vh;
+}
+
+#description {
+  min-height: 30vh;
+  margin-top: 4vh;
+}
+
+#assignedTo {
+  margin-top: 2vh;
 }

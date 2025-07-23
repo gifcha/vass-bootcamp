@@ -1,7 +1,39 @@
 <div id="task-details-container">
-
   <div id="content-container">
-    <h1> Task Details </h1>
-  </div>
 
+    <!-- Edit button -->
+    <button>Edit</button>
+
+    <!-- Title -->
+    <mat-card>
+      <mat-card-content>{{data.task.title}}</mat-card-content>
+    </mat-card>
+
+    <!-- Status, Type, CreatedOn -->
+    <div id="grouped-cards">
+      <mat-card>
+        <mat-card-content>{{data.task.status}}</mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>{{data.task.type}}</mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>{{data.task.createdon}}</mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Description -->
+    <mat-card id="description">
+      <mat-card-content>{{data.task.description}}</mat-card-content>
+    </mat-card>
+
+    <!-- AssignedTo -->
+    <mat-card id="assignedTo">
+      @if (data.user != undefined) {
+        <mat-card-content>{{data.user.username}}</mat-card-content>
+      }
+    </mat-card>
+
+
+  </div>
 </div>

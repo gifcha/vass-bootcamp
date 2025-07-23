@@ -12,6 +12,7 @@ import { AsyncPipe } from '@angular/common';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
+import { MatRippleModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-task-list',
@@ -20,7 +21,7 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
     MatCardModule,
     MatButtonModule,
     AsyncPipe,
-    TaskDetailsComponent
+    MatRippleModule
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
@@ -31,7 +32,6 @@ export class TaskListComponent {
   tasks$: Observable<Task[]>;
   users$: Observable<User[]>;
   userMap = new Map<string, User>();
-  showDetails = false;
 
   constructor(
     private router: Router,
@@ -61,20 +61,14 @@ export class TaskListComponent {
     this.taskService.removeTaskById(id);
   }
 
-  test(): void {
-    console.log("click"); // TODO
-  }
-
   openCreateTask() {
-    let d = this.dialog.open(TaskCreateComponent);
-    if (d.componentRef) {
-      d.componentRef.instance.dialog = d;
-    }
+    this.dialog.open(TaskCreateComponent);
   }
 
-  openTaskDetails() {
-    console.log("DETAILS");
-    this.showDetails = true;
+  openTaskDetails(task: Task) {
+    let user: User | undefined = this.userMap.get(task.assignedto);
+    console.log("In open", user);
+    this.dialog.open(TaskDetailsComponent, {data: {task, user}});
   }
 
   getAssignedUsername(id: string): string {
