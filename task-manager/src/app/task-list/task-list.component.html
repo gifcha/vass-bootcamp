@@ -14,10 +14,10 @@
     @for(task of (this.tasks$ | async); track task){
       <mat-card appearance="outlined">
         <mat-card-content>{{task.title}}</mat-card-content>
-        <mat-card-content>{{getAssignedUsername(task.assignedto)}}</mat-card-content>
+        <mat-card-content>{{getAssignedUsername(task.assignedTo)}}</mat-card-content>
         <mat-card-content>{{task.type}}</mat-card-content>
         <mat-card-content>{{task.status}}</mat-card-content>
-        <mat-card-content>{{task.createdon}}</mat-card-content>
+        <mat-card-content>{{task.createdOn}}</mat-card-content>
         <button (click)="removeTaskById(task.id)" mat-flat-button id="delete-task-btn">Delete</button>
       </mat-card>
     }
