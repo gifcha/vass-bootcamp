@@ -4,8 +4,8 @@ export type Task = {
   type: string;
   description: string;
   status: string;
-  createdon: string;
-  assignedto: string; // uuid4
+  createdOn: string;
+  assignedTo: string; // uuid4
 }
 
 
@@ -15,7 +15,7 @@ export function createTaskFromObj(
     type: string,
     description: string,
     status: string ,
-    assignedto: string
+    assignedTo: string
   }): Task {
 
     return {
@@ -24,7 +24,7 @@ export function createTaskFromObj(
       type: valueObj.type,
       description: valueObj.description,
       status: valueObj.status,
-      createdon: new Date().toLocaleDateString("en-GB"),
-      assignedto: valueObj.assignedto
+      createdOn: new Date().toLocaleDateString("en-GB"),
+      assignedTo: valueObj.assignedTo
     }
   }

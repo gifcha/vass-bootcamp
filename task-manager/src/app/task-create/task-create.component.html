@@ -52,7 +52,7 @@
     <!-- Assigned User -->
     <mat-form-field appearance="fill" [hideRequiredMarker]=true>
       <mat-label>Assigned To</mat-label>
-      <mat-select formControlName="assignedto" type="text" id="assignedto" name="assignedto" required>
+      <mat-select formControlName="assignedTo" type="text" id="assignedTo" name="assignedTo" required>
         @for(user of (users$ | async); track user) {
           <mat-option value=user.id>{{user.firstName}} {{user.lastName}} ({{user.username}})</mat-option>
         }
