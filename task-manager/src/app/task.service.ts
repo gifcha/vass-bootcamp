@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, defer, Observable, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, shareReplay, switchMap, throwError } from 'rxjs';
 import { environment } from '../environments/environment.dev';
 
 
@@ -13,14 +13,20 @@ export class TaskService {
   private taskUrl = environment.apiBaseUrl + environment.taskApiUrl;
   private tasksSubject = new BehaviorSubject<Task[]>([]);
 
-  // Fetch tasks when observable is assigned
-  public tasks$: Observable<Task[]> = defer(() => this.http.get<Task[]>(this.taskUrl).pipe(
-    tap(tasks => this.tasksSubject.next(tasks)),
-    catchError(this.handleError),
-    shareReplay(1)
-  ));
+  taskTypes: string[] = ["Normal", "Optional", "Urgent"]
+  taskStatuses: string[] = ["To do", "In progress", "Completed"]
 
-  constructor(private http: HttpClient) {}
+  // Fetch tasks when observable is assigned
+  public tasks$: Observable<Task[]> = this.tasksSubject.pipe(
+    switchMap(() => this.http.get<Task[]>(this.taskUrl).pipe(
+      catchError(this.handleError)
+    )),
+    shareReplay({ bufferSize: 1, refCount: true })
+  );
+
+  constructor(private http: HttpClient) {
+
+  }
 
   private handleError(error: HttpErrorResponse) {
     console.error(`Error occurred Status: ${error.status}, Message: ${error.message}`);
@@ -48,6 +54,13 @@ export class TaskService {
       .pipe(catchError(this.handleError))
       .subscribe(tasks => {
         this.tasksSubject.next(tasks);
+      });
+  }
+
+  updateTask(task: Task) {
+    this.http.put<Task>(`${this.taskUrl}/${task.id}`, task).subscribe(
+      updatedTask => {
+        this.refreshTasks();
       });
   }
 }

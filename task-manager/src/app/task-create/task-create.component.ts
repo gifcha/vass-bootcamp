@@ -17,9 +17,9 @@ import { AsyncPipe } from '@angular/common';
   imports: [
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatButtonModule,
     MatSelectModule,
     AsyncPipe
   ],
@@ -36,11 +36,9 @@ export class TaskCreateComponent {
     description: this.formBuilder.control("", Validators.required),
     type: this.formBuilder.control("", Validators.required),
     status: this.formBuilder.control("", Validators.required),
-    assignedTo: this.formBuilder.control("UNASSIGNED", Validators.required)
+    assignedTo: this.formBuilder.control("")
   });
 
-  taskTypes: string[] = ["Normal", "Optional", "Urgent"]
-  taskStatuses: string[] = ["To do", "In progress", "Completed"]
   users$: Observable<User[]>;
 
 

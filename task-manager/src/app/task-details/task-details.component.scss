@@ -21,6 +21,11 @@
   padding-right: 2vw;
 }
 
+#edit-btn {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
 #grouped-cards {
   display: flex;
   justify-content: space-between;
@@ -28,10 +33,15 @@
 }
 
 #description {
-  min-height: 30vh;
+  height: 10em;
+  width: 100%;
   margin-top: 4vh;
 }
 
-#assignedTo {
+#assigned-to {
   margin-top: 2vh;
+}
+
+.input {
+  display: block;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from './user.model';
 import { environment } from '../environments/environment.dev';
-import { BehaviorSubject, catchError, defer, Observable, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, defer, Observable, shareReplay, switchMap, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -12,11 +12,12 @@ export class UserService {
   private usersSubject = new BehaviorSubject<User[]>([]);
 
   // Fetch users when observable is assigned
-  public users$: Observable<User[]> = defer(() => this.http.get<User[]>(this.userUrl).pipe(
-    tap(users => this.usersSubject.next(users)),
-    catchError(this.handleError),
-    shareReplay(1)
-  ));
+  public users: Observable<User[]> = this.usersSubject.pipe(
+    switchMap(() => this.http.get<User[]>(this.userUrl).pipe(
+      catchError(this.handleError)
+    )),
+    shareReplay({ bufferSize: 1, refCount: true })
+  );
 
 
   constructor(private http: HttpClient) {}

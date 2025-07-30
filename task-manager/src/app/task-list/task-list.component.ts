@@ -66,8 +66,7 @@ export class TaskListComponent {
   }
 
   openTaskDetails(task: Task) {
-    let user: User | undefined = this.userMap.get(task.assignedto);
-    console.log("In open", user);
+    let user: User | undefined = this.userMap.get(task.assignedTo);
     this.dialog.open(TaskDetailsComponent, {data: {task, user}});
   }
 
