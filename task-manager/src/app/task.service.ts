@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, defer, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from '../environments/environment.dev';
 
 
@@ -12,8 +12,13 @@ import { environment } from '../environments/environment.dev';
 export class TaskService {
   private taskUrl = environment.apiBaseUrl + environment.taskApiUrl;
   private tasksSubject = new BehaviorSubject<Task[]>([]);
-  public tasks$ = this.tasksSubject.asObservable();
 
+  // Fetch tasks when observable is assigned
+  public tasks$: Observable<Task[]> = defer(() => this.http.get<Task[]>(this.taskUrl).pipe(
+    tap(tasks => this.tasksSubject.next(tasks)),
+    catchError(this.handleError),
+    shareReplay(1)
+  ));
 
   constructor(private http: HttpClient) {}
 
@@ -22,29 +27,27 @@ export class TaskService {
     return throwError(() => error);
   }
 
-
-  getTaskList(): void {
+  refreshTasks(): void {
     this.http.get<Task[]>(this.taskUrl)
-    .pipe(catchError(this.handleError))
-    .subscribe(tasks => {
-      this.tasksSubject.next(tasks);
-    });
+      .pipe(catchError(this.handleError))
+      .subscribe(tasks => {
+        this.tasksSubject.next(tasks);
+      });
   }
 
   addTask(task: Task): void {
     this.http.post<Task>(this.taskUrl, task).subscribe(
       createdTask => {
-        console.log(createdTask);
         const currentTasks = this.tasksSubject.value;
         this.tasksSubject.next([...currentTasks, createdTask]);
       });
   }
 
   removeTaskById(id: string): void {
-    this.http.delete<Task[]>(this.taskUrl + "/" + id)
-    .pipe(catchError(this.handleError))
-    .subscribe(tasks => {
-      this.tasksSubject.next(tasks);
-    });
+    this.http.delete<Task[]>(`${this.taskUrl}/${id}`)
+      .pipe(catchError(this.handleError))
+      .subscribe(tasks => {
+        this.tasksSubject.next(tasks);
+      });
   }
 }

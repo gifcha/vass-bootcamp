@@ -2,6 +2,7 @@
   <form id="task-create-form" [formGroup]="taskCreateForm">
     <h1>Create a task</h1>
 
+    <!-- Title -->
     <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.title.valid>
       <mat-label>Title</mat-label>
       <input formControlName="title" matInput type="text" class="input" id="Title" name="Title" placeholder="Title" required/>
@@ -10,7 +11,7 @@
       }
     </mat-form-field>
 
-
+    <!-- Description -->
     <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.description.valid>
       <mat-label>Description</mat-label>
       <textarea formControlName="description" matInput type="text" class="input" id="Description" name="Description" placeholder="Description" required></textarea>
@@ -20,7 +21,7 @@
       }
     </mat-form-field>
 
-
+    <!-- Type -->
     <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.type.valid>
       <mat-label>Type</mat-label>
       <mat-select formControlName="type" type="text" id="Type" name="Type" required>
@@ -34,7 +35,7 @@
       }
     </mat-form-field>
 
-
+    <!-- Status -->
     <mat-form-field appearance="fill" [hideRequiredMarker]=this.taskCreateForm.controls.status.valid>
       <mat-label>Status</mat-label>
       <mat-select formControlName="status" type="text" id="Status" name="Status" required>
@@ -46,6 +47,16 @@
       @if(this.taskCreateForm.controls.status.invalid && this.showValidatorError) {
         <mat-hint>Status can't be empty</mat-hint>
       }
+    </mat-form-field>
+
+    <!-- Assigned User -->
+    <mat-form-field appearance="fill" [hideRequiredMarker]=true>
+      <mat-label>Assigned To</mat-label>
+      <mat-select formControlName="assignedTo" type="text" id="assignedTo" name="assignedTo" required>
+        @for(user of (users$ | async); track user) {
+          <mat-option value=user.id>{{user.firstName}} {{user.lastName}} ({{user.username}})</mat-option>
+        }
+      </mat-select>
     </mat-form-field>
 
     <button mat-flat-button id="create-task-btn" (click)="createTask()" >Create task</button>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from './user.model';
 import { environment } from '../environments/environment.dev';
-import { BehaviorSubject, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, defer, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -10,7 +10,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class UserService {
   private userUrl = environment.apiBaseUrl + environment.userApiUrl;
   private usersSubject = new BehaviorSubject<User[]>([]);
-  public users$ = this.usersSubject.asObservable();
+
+  // Fetch users when observable is assigned
+  public users$: Observable<User[]> = defer(() => this.http.get<User[]>(this.userUrl).pipe(
+    tap(users => this.usersSubject.next(users)),
+    catchError(this.handleError),
+    shareReplay(1)
+  ));
 
 
   constructor(private http: HttpClient) {}
@@ -21,12 +27,16 @@ export class UserService {
   }
 
 
-  getUserList(): void {
+  refreshUsers(): void {
     this.http.get<User[]>(this.userUrl)
-    .pipe(catchError(this.handleError))
-    .subscribe(users => {
-      this.usersSubject.next(users);
-    });
+      .pipe(catchError(this.handleError))
+      .subscribe(users => {
+        this.usersSubject.next(users);
+      });
+  }
+
+  getUserById(id: string): Observable<User> {
+    return this.http.get<User>(`${this.userUrl}/${id}`);
   }
 
   addUser(user: User): void {
@@ -37,5 +47,4 @@ export class UserService {
         this.usersSubject.next([...currentUsers, createdUser]);
       });
   }
-
 }
