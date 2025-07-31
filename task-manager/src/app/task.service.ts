@@ -24,9 +24,7 @@ export class TaskService {
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   private handleError(error: HttpErrorResponse) {
     console.error(`Error occurred Status: ${error.status}, Message: ${error.message}`);

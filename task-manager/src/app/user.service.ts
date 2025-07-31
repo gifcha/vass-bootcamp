@@ -12,12 +12,11 @@ export class UserService {
   private usersSubject = new BehaviorSubject<User[]>([]);
 
   // Fetch users when observable is assigned
-  public users: Observable<User[]> = this.usersSubject.pipe(
-    switchMap(() => this.http.get<User[]>(this.userUrl).pipe(
-      catchError(this.handleError)
-    )),
-    shareReplay({ bufferSize: 1, refCount: true })
-  );
+  public users$: Observable<User[]> = defer(() => this.http.get<User[]>(this.userUrl).pipe(
+    tap(users => this.usersSubject.next(users)),
+    catchError(this.handleError),
+    shareReplay(1)
+  ));
 
 
   constructor(private http: HttpClient) {}
