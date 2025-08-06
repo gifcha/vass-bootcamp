@@ -17,9 +17,9 @@ import { AsyncPipe } from '@angular/common';
   imports: [
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatButtonModule,
     MatSelectModule,
     AsyncPipe
   ],
@@ -29,7 +29,6 @@ import { AsyncPipe } from '@angular/common';
 
 export class TaskCreateComponent {
   showValidatorError = false;
-  dialog: DialogRef<unknown, TaskCreateComponent> | null = null; // reference to dialoge box this component is in
 
   formBuilder = new FormBuilder().nonNullable;
   taskCreateForm = new FormGroup({
@@ -37,15 +36,18 @@ export class TaskCreateComponent {
     description: this.formBuilder.control("", Validators.required),
     type: this.formBuilder.control("", Validators.required),
     status: this.formBuilder.control("", Validators.required),
-    assignedTo: this.formBuilder.control("UNASSIGNED", Validators.required)
+    assignedTo: this.formBuilder.control("")
   });
 
-  taskTypes: string[] = ["Normal", "Optional", "Urgent"]
-  taskStatuses: string[] = ["To do", "In progress", "Completed"]
   users$: Observable<User[]>;
 
 
-  constructor(public taskService: TaskService, public userService: UserService) {
+  constructor(
+    public taskService: TaskService,
+    public userService: UserService,
+    public dialogRef: DialogRef<TaskCreateComponent>
+  )
+  {
     this.users$ = this.userService.users$;
   }
 
@@ -56,9 +58,7 @@ export class TaskCreateComponent {
       this.taskService.addTask(task);
 
       this.showValidatorError = false;
-      if (this.dialog != null) {
-        this.dialog.close();
-      }
+      this.dialogRef.close();
     }
     else {
       this.showValidatorError = true;
