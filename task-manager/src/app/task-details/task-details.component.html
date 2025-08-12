@@ -1,1 +1,111 @@
-<p>task-details works!</p>
+<div id="task-details-container">
+  <div id="content-container">
+
+    <!-- Toggle Edit button -->
+    <button mat-fab aria-label="Edit" id="edit-btn" (click)="toggleEditing()">
+      <mat-icon>border_color</mat-icon>
+    </button>
+
+
+    @if (isEditMode == false) {
+      <!-- Normal view -->
+
+      <!-- Title -->
+      <mat-card>
+        <mat-card-content>{{data.task.title}}</mat-card-content>
+      </mat-card>
+
+      <!-- Status, Type, CreatedOn -->
+      <div id="grouped-cards">
+        <mat-card>
+          <mat-card-content>{{data.task.status}}</mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>{{data.task.type}}</mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>{{data.task.createdOn}}</mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Description -->
+      <mat-card id="description">
+        <mat-card-content>{{data.task.description}}</mat-card-content>
+      </mat-card>
+
+      <!-- AssignedTo -->
+      @if (data.user != undefined) {
+        <mat-card id="assigned-to">
+          <mat-card-content>
+            {{data.user.firstName}} {{data.user.lastName}} ({{data.user.username}})
+          </mat-card-content>
+        </mat-card>
+      }
+    }
+    @else {
+      <!-- Edit view -->
+
+      <form id="task-create-form" [formGroup]="taskDetailsForm">
+        <!-- Title -->
+        <mat-form-field class="input" appearance="outline" [hideRequiredMarker]=this.taskDetailsForm.controls.title.valid>
+          <mat-label>Title</mat-label>
+          <input formControlName="title" matInput type="text" id="Title" name="Title" placeholder="Title" required/>
+          @if(this.taskDetailsForm.controls.title.invalid) {
+            <mat-hint>Title can't be empty</mat-hint>
+          }
+        </mat-form-field>
+
+
+        <div id="grouped-cards">
+          <!-- Status -->
+          <mat-form-field class="input" appearance="outline" [hideRequiredMarker]=true>
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" type="text" id="Status" name="Status" required>
+              @for(option of taskService.taskStatuses; track option) {
+                <mat-option value={{option}}>{{option}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Type -->
+          <mat-form-field class="input" appearance="outline" [hideRequiredMarker]=true>
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type" type="text" id="Type" name="Type" required>
+              @for(option of taskService.taskTypes; track option) {
+                <mat-option value={{option}}>{{option}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Created On -->
+          <!-- not editable -->
+          <mat-card>
+            <mat-card-content>{{data.task.createdOn}}</mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Description -->
+        <mat-form-field id="description" appearance="outline" [hideRequiredMarker]=true>
+          <mat-label>Description</mat-label>
+          <textarea formControlName="description" matInput type="text" id="Description" name="Description" placeholder="Description" required></textarea>
+        </mat-form-field>
+
+        <!-- AssignedTo -->
+        <mat-form-field class="input" appearance="outline" [hideRequiredMarker]=true>
+          <mat-label>Assigned To</mat-label>
+          <mat-select formControlName="assignedTo" type="text" id="assignedTo" name="assignedTo">
+            <mat-option value="">Unassigned</mat-option>
+
+            @for(user of (users$ | async); track user) {
+              <mat-option value={{user.id}}>{{user.firstName}} {{user.lastName}} ({{user.username}})</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </form>
+
+      <!-- Save button -->
+      <button (click)="updateTask(data.task.id)" mat-flat-button>Save</button>
+    }
+
+  </div>
+</div>

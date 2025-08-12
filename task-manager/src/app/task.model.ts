@@ -24,7 +24,7 @@ export function createTaskFromObj(
       type: valueObj.type,
       description: valueObj.description,
       status: valueObj.status,
-      createdOn: new Date().toLocaleDateString("en-GB"),
+      createdOn: new Date().toISOString(),
       assignedTo: valueObj.assignedTo
     }
   }
