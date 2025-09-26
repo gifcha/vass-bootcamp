@@ -26,7 +26,7 @@ import { AuthService } from '../auth.service';
     MatIconModule
   ],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['../auth-shared.scss']
 })
 export class RegisterComponent {
   registerForm: FormGroup;

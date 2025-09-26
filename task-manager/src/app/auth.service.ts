@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '../environments/environment.dev';
 import { LoginData, RegisterData } from './auth.model';
 import { firstValueFrom } from 'rxjs';
@@ -13,23 +13,15 @@ export class AuthService {
   loginUrl = environment.apiBaseUrl + environment.loginApiUrl;
   registerUrl = environment.apiBaseUrl + environment.registerApiUrl;
   isLoggedInUrl = environment.apiBaseUrl + environment.isLoggedInUrl;
-  public redirectUrl = "";
+  redirectUrl = "/task-list";
 
-
-  constructor(private http: HttpClient, private router: Router) {
-    this.http = http;
-  }
+  private http = inject(HttpClient);
+  private router = inject(Router);
 
 
   login(loginData: LoginData): void {
-    this.http.post(this.loginUrl, loginData, {observe: "response"}).subscribe(resp => {
-      if (resp.status === 200) {
-        // redirect on successful login
-        if (this.redirectUrl == "") {
-          this.router.navigate(["task-list"]);
-        }
-        this.router.navigate([this.redirectUrl]);
-      }
+    this.http.post(this.loginUrl, loginData, {observe: "response"}).subscribe(res => {
+      this.router.navigate([this.redirectUrl]);
     });
   }
 
@@ -38,11 +30,8 @@ export class AuthService {
   }
 
   register(registerData: RegisterData): void {
-    this.http.post(this.registerUrl, registerData, {observe: "response"}).subscribe(resp => {
-      if (resp.status === 200) {
-        // redirect on successful register
-        this.router.navigate(["task-list"]);
-      }
+    this.http.post(this.registerUrl, registerData, {observe: "response"}).subscribe(res => {
+      this.router.navigate([this.redirectUrl]);
     });
   }
 }

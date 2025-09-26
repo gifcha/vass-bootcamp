@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -16,7 +15,6 @@ import { LoginData } from '../auth.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -24,27 +22,19 @@ import { LoginData } from '../auth.model';
     MatIconModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: '../auth-shared.scss'
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   loginForm: FormGroup;
   hidePassword = true;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
       username: this.formBuilder.control('', Validators.required),
       password: this.formBuilder.control('', Validators.required),
     });
-  }
-
-  async ngOnInit() {
-    // redirect if already logged in
-    let isAuth = await this.authService.isAuthenticated();
-    if (isAuth == true) {
-      this.router.navigate(["task-list"]);
-    }
   }
 
   onSubmit(): void {

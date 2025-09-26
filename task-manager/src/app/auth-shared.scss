@@ -1,4 +1,4 @@
-.login-container {
+.auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,7 @@
   box-sizing: border-box;
 }
 
-.login-card {
+.auth-card {
   width: 100%;
   max-width: 450px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -16,7 +16,7 @@
   backdrop-filter: blur(10px);
 }
 
-.login-title {
+.auth-title {
   font-size: 2rem;
   font-weight: 600;
   text-align: center;
@@ -35,7 +35,7 @@ mat-card-subtitle {
   margin-top: 8px;
 }
 
-.login-form {
+.auth-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -60,7 +60,7 @@ mat-form-field {
   }
 }
 
-.login-button {
+.other-auth-button {
   color: #666;
   font-size: 0.95rem;
   margin: 0;
@@ -77,15 +77,15 @@ mat-card-actions {
 
 // Responsive design
 @media (max-width: 480px) {
-  .login-container {
+  .auth-container {
     padding: 16px;
   }
 
-  .login-card {
+  .auth-card {
     max-width: 100%;
   }
 
-  .login-title {
+  .auth-title {
     font-size: 1.75rem;
   }
 
