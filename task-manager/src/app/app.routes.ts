@@ -1,34 +1,35 @@
 import { Routes } from '@angular/router';
-import { TaskCreateComponent } from './task-create/task-create.component';
 import { TaskListComponent } from './task-list/task-list.component';
-import { TaskDetailsComponent } from './task-details/task-details.component';
-import { AppComponent } from './app.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
     path: 'task-list',
-    component: TaskListComponent
+    component: TaskListComponent,
+    canMatch: [authGuard]
   },
   {
     path: 'task-create',
-    component: TaskListComponent
-
+    component: TaskListComponent,
+    canMatch: [authGuard]
   },
   {
-    path: 'task-details',
-    component: TaskDetailsComponent },
-  {
     path: '',
-    redirectTo: 'task-list',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'user-list',
-    component: UserListComponent
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: '**',
-    redirectTo: 'task-list'
+    redirectTo: 'login'
   },
 ];

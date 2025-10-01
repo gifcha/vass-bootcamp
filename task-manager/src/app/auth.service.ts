@@ -1,35 +1,38 @@
-import { Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { environment } from '../environments/environment.dev';
+import { LoginData, RegisterData } from './auth.model';
+import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  private readonly TOKEN_KEY = 'jwt_token'; // Key for localStorage
-  private tokenSignal = signal<string | null>(this.getTokenFromStorage());
+  loginUrl = environment.apiBaseUrl + environment.loginApiUrl;
+  registerUrl = environment.apiBaseUrl + environment.registerApiUrl;
+  isLoggedInUrl = environment.apiBaseUrl + environment.isLoggedInUrl;
+  redirectUrl = "/task-list";
 
-  readonly token = this.tokenSignal.asReadonly();
+  private http = inject(HttpClient);
+  private router = inject(Router);
 
-  constructor() {
-    // Optional: Sync tokenSignal with localStorage on initialization
-    this.tokenSignal.set(this.getTokenFromStorage());
+
+  login(loginData: LoginData): void {
+    this.http.post(this.loginUrl, loginData, {observe: "response"}).subscribe(res => {
+      this.router.navigate([this.redirectUrl]);
+    });
   }
 
-  setToken(token: string): void {
-    this.tokenSignal.set(token);
-    localStorage.setItem(this.TOKEN_KEY, token); // Save to localStorage
+  async isAuthenticated(): Promise<boolean> {
+    return firstValueFrom(this.http.get<boolean>(this.isLoggedInUrl));
   }
 
-  clearToken(): void {
-    this.tokenSignal.set(null);
-    localStorage.removeItem(this.TOKEN_KEY); // Remove from localStorage
-  }
-
-  get isAuthenticated(): boolean {
-    return this.tokenSignal() !== null;
-  }
-
-  private getTokenFromStorage(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+  register(registerData: RegisterData): void {
+    this.http.post(this.registerUrl, registerData, {observe: "response"}).subscribe(res => {
+      this.router.navigate([this.redirectUrl]);
+    });
   }
 }
+

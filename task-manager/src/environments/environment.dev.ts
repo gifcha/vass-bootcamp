@@ -1,6 +1,8 @@
 export const environment = {
-  apiBaseUrl: 'http://localhost:8080/api/',
+  apiBaseUrl: '/api/',
   taskApiUrl: 'tasks',
   userApiUrl: 'users',
-  loginApiUrl: 'auth/login'
+  loginApiUrl: 'auth/login',
+  registerApiUrl: 'auth/register',
+  isLoggedInUrl: 'auth/is-valid'
 };
